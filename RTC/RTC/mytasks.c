@@ -56,7 +56,7 @@ struct _GoalKeeperStruct  Buf = {0} ;
 			xQueueReceive(XMailboxGoalKeeper, &Buf ,1);			
 			S7egment_Write(Buf.RTCDate.Year , 0,&S7egHendler);
 			S7egment_Write(Buf.RTCDate.month,2,&S7egHendler);
-			S7egment_Write(Buf.RTCDate.Day  ,4,&S7egHendler);
+			S7egment_Write(Buf.RTCDate.DayDate  ,4,&S7egHendler);
 			vTaskDelay(1);	
 	}	
 }

@@ -1782,11 +1782,11 @@ struct _GoalKeeperStruct  Buf = {0} ;
      a84:	62 e0       	ldi	r22, 0x02	; 2
      a86:	88 85       	ldd	r24, Y+8	; 0x08
      a88:	0e 94 6d 03 	call	0x6da	; 0x6da <S7egment_Write>
-			S7egment_Write(Buf.RTCDate.Day  ,4,&S7egHendler);
+			S7egment_Write(Buf.RTCDate.DayDate  ,4,&S7egHendler);
      a8c:	49 e7       	ldi	r20, 0x79	; 121
      a8e:	50 e0       	ldi	r21, 0x00	; 0
      a90:	64 e0       	ldi	r22, 0x04	; 4
-     a92:	8e 81       	ldd	r24, Y+6	; 0x06
+     a92:	8f 81       	ldd	r24, Y+7	; 0x07
      a94:	0e 94 6d 03 	call	0x6da	; 0x6da <S7egment_Write>
 			vTaskDelay(1);	
      a98:	81 e0       	ldi	r24, 0x01	; 1

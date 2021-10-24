@@ -16,7 +16,7 @@ TaskHandle_t    ShowDateTaskhandler ;
 
 Time_Typedef  Time ={.Hours =10 ,.Minutes = 20 ,.RTC_Time_Format = RTC_Format_BIN },  \
 gettime ={.RTC_Time_Format = RTC_Format_BIN}   ;
-Date_Typedef  Date ={.Day = 24 ,.Year = 21 ,.month = 10,.RTC_Time_Format = RTC_Format_BIN},\
+Date_Typedef  Date ={.DayDate = 24 ,.Year = 21 ,.month = 10,.RTC_Time_Format = RTC_Format_BIN},\
 getdate = {.RTC_Time_Format = RTC_Format_BIN};
 
 
