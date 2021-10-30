@@ -22,7 +22,14 @@
 #include "RTCBits.h"
 #include "util/delay.h"
 #include "interrup.h"
+#include <stdbool.h>
 
+#define Suspend  0u
+#define Resumed  1u
+
+
+#define Increase  0u
+#define Decrease  1u
 
 
 

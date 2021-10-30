@@ -3,12 +3,17 @@
 
 
 
+bool ShowTimeStatus = Suspend ;
 
 SemaphoreHandle_t xMutexGoalKeeper;
 
 QueueHandle_t  XMailboxGoalKeeper ;
 
 QueueHandle_t  XQueueSYNC ;
+
+
+QueueHandle_t  XQueueUpdateRTC ;
+
 
 TaskHandle_t    ShowTimeTaskhandler ;
 TaskHandle_t    ShowDateTaskhandler ;
@@ -31,20 +36,26 @@ int main(void)
 	
 	InterrutInt();
 	EXIT_INT0_CallBack(INT0_Handler);
+	EXIT_INT1_CallBack(INT1_Handler);
+	EXIT_INT2_CallBack(INT2_Handler);
 	
-		xMutexGoalKeeper = xSemaphoreCreateMutex();	
+		
+	xMutexGoalKeeper = xSemaphoreCreateMutex();	
 	
 	
 	
-	XMailboxGoalKeeper  = xQueueCreate(1,sizeof(RTC_Data));
+	XMailboxGoalKeeper  =		xQueueCreate(1,sizeof(RTC_Data));
 	
-	XQueueSYNC     = xQueueCreate(1,sizeof(uint8_t));
+	XQueueSYNC			=		xQueueCreate(1,sizeof(uint8_t));
+	
+	XQueueUpdateRTC		=		xQueueCreate(1,sizeof(uint8_t));
+	
 	
 	xTaskCreate(ShowTimeTask,NULL,200,NULL,1,&ShowTimeTaskhandler);
 	xTaskCreate(ShowDateTask,NULL,200,NULL,1,&ShowDateTaskhandler);	
 	xTaskCreate(GoalKeeper_Task,NULL,200,NULL,3,NULL);	
 	xTaskCreate(SYNC_Task,NULL,85,NULL,3,NULL);	
-	
+	xTaskCreate(UpdateRTC_Task,NULL,100,NULL,4,NULL);	
 	
 		vTaskStartScheduler();
 
@@ -69,6 +80,20 @@ void INT0_Handler(void )
 		i=0 ;
 }
 
+void INT1_Handler(void )
+{
+	uint8_t state  =  Increase  ;
+	xQueueSendFromISR(XQueueUpdateRTC,&state,NULL);	
+
+}
+
+void INT2_Handler(void )
+{
+	uint8_t state = Decrease ;
+	
+	xQueueSendFromISR(XQueueUpdateRTC,&state,NULL);	
+
+}
 
 
 
@@ -84,11 +109,21 @@ int i =0 ;
 		
 		vTaskSuspend(ShowTimeTaskhandler);
 		vTaskResume(ShowDateTaskhandler);
+		taskENTER_CRITICAL();
+		ShowTimeStatus  =  Suspend ;
+		taskEXIT_CRITICAL();
+		
+		
 		}
 		else
 		{
 		vTaskSuspend(ShowDateTaskhandler);
-		vTaskResume(ShowTimeTaskhandler);			
+		vTaskResume(ShowTimeTaskhandler);	
+		
+		taskENTER_CRITICAL();
+		ShowTimeStatus  =  Resumed ;	
+		taskEXIT_CRITICAL();		
+				
 			
 		}
 		vTaskDelay(5);

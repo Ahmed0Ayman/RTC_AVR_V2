@@ -17,6 +17,14 @@
 #include "RTCBits.h"
 #include "main.h"
 
+#define Suspend  0u
+#define Resumed  1u
+
+
+#define Increase  0u
+#define Decrease  1u
+
+
 struct _GoalKeeperStruct
 {
 	Time_Typedef  RTCTime ;	
@@ -24,11 +32,12 @@ struct _GoalKeeperStruct
 }RTC_Data;
 
 
+
 void ShowTimeTask( void * Param );
 void ShowDateTask(void  * param);
 void SET_Task(void * Param);
 void GoalKeeper_Task(void * Param);
-
+void UpdateRTC_Task(void * Param);
 
 
 

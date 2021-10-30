@@ -10,7 +10,7 @@
 
 
 /* static pointer to function used by the library */
-static PtrFun ptr ;
+ PtrFun ptr_Int0 ,ptr_Int1 ,ptr_Int2;
 
 
 
@@ -61,7 +61,7 @@ void EXTI_Init(EXIT_Handler_t * Handler)
 void EXIT_INT0_CallBack(PtrFun PtrToFun)
 {
 	
-	ptr = PtrToFun ;
+	ptr_Int0 = PtrToFun ;
 	
 	
 }/* END_FUN EXIT_INT0_CallBack()  */
@@ -78,7 +78,7 @@ void EXIT_INT0_CallBack(PtrFun PtrToFun)
 void EXIT_INT1_CallBack(PtrFun PtrToFun)
 {
 	
-	ptr = PtrToFun ;
+	ptr_Int1 = PtrToFun ;
 	
 }/* END_FUN EXIT_INT1_CallBack()  */
 
@@ -94,7 +94,7 @@ void EXIT_INT1_CallBack(PtrFun PtrToFun)
 void EXIT_INT2_CallBack(PtrFun PtrToFun)
 {
 	
-	ptr = PtrToFun ;
+	ptr_Int2 = PtrToFun ;
 	
 }/* END_FUN EXIT_INT2_CallBack()  */
 
@@ -141,15 +141,15 @@ void EXIT_DISABLE(EXIT_Handler_t * Handler)
 /* INIT0 Function */
 ISR(INT0_vect)
 {
-	ptr();
+	ptr_Int0();
 }
 /* INIT0 Function */
 ISR(INT1_vect)
 {
-	ptr();
+	ptr_Int1();
 }
 /* INIT0 Function */
 ISR(INT2_vect)
 {
-	ptr();
+	ptr_Int2();
 }
